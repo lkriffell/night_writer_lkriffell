@@ -23,9 +23,16 @@ class NightWriter
     "Created '#{@ARGV[1]}' containing #{char_count} characters"
   end
 
+  def write_file
+    translation = "hello world"
+    @writer.write(translation, @ARGV[1])
+  end
+
   def read_file
     message_string = @reader.read(@ARGV[0])
   end
+
+
 end
 # For testing that sample line prints correctly
 # bob = NightWriter.new
