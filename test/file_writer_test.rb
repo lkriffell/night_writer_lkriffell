@@ -4,13 +4,20 @@ require "./lib/file_writer"
 
 class FileWriterTest < Minitest::Test
 
-  def test_it_exists
-    writer = FileWriter.new
-    
-    assert_instance_of FileWriter, writer
+  def setup
+    @writer = FileWriter.new
   end
 
-  #def test_it_has_attributes
-  #end
+  def test_it_exists
+
+    assert_instance_of FileWriter, @writer
+  end
+
+  def test_write
+    translation = "o.\noo\n..\n"
+    @writer.write(translation)
+
+    assert_equal "o.\noo\n..\n", File.read("braille.txt")
+  end
 
 end
