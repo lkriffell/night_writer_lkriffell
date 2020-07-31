@@ -35,25 +35,25 @@ class NightWriterTest < Minitest::Test
   end
 
   def test_split_message
-    expected = ["h", "e", "l", "l", "o", "w", "o", "r", "l", "d"]
+    expected = ["h", "e", "l", "l", "o", " ", "w", "o", "r", "l", "d"]
 
     assert_equal expected, @encoder.split_message
   end
 
   def test_encode_to_braille
-    expected = ["o.", "oo", "..", "o.", ".o", "..", "o.", "o.", "o.", "o.", "o.", "o.", "o.", ".o", "o.", ".o", "oo", ".o", "o.", ".o", "o.", "o.", "oo", "o.", "o.", "o.", "o.", "oo", ".o", ".."]
+    expected = ["0.", "00", "..", "0.", ".0", "..", "0.", "0.", "0.", "0.", "0.", "0.", "0.", ".0", "0.", "..", "..", "..", ".0", "00", ".0", "0.", ".0", "0.", "0.", "00", "0.", "0.", "0.", "0.", "00", ".0", ".."]
 
     assert_equal expected, @encoder.encode_to_braille.split("\n")
   end
 
   def test_translate_for_output
-    expected = "o.o.o.o.o..oo.o.o.oo","oo.oo.o..ooo.oooo..o","....o.o.o..oo.o.o..."
+    expected = ["00.00.0..0..00.0000..0", "....0.0.0....00.0.0..."]
 
     assert_equal expected, @encoder.translate_for_output.split("\n")
   end
 
   def test_determine_row_count
-    split_braille = ["o.", "oo", "..", "o.", ".o", "..", "o.", "o.", "o.", "o.", "o.", "o.", "o.", ".o", "o.", ".o", "oo", ".o", "o.", ".o", "o.", "o.", "oo", "o.", "o.", "o.", "o.", "oo", ".o", ".."]
+    split_braille = ["0.", "00", "..", "0.", ".0", "..", "0.", "0.", "0.", "0.", "0.", "0.", "0.", ".0", "0.", ".0", "00", ".0", "0.", ".0", "0.", "0.", "00", "0.", "0.", "0.", "0.", "00", ".0", ".."]
 
     assert_equal 10, @encoder.determine_row_count(split_braille)
   end
