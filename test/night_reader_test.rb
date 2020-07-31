@@ -18,4 +18,10 @@ class NightReaderTest < Minitest::Test
     assert_instance_of Dictionary, @night_reader.dictionary
   end
 
+  def test_print_sample_line
+    expected = "Created 'original_message.txt' containing 68 characters"
+
+    assert_equal expected, @night_reader.print_sample_line
+  end
+
 end
