@@ -57,5 +57,4 @@ class NightWriterTest < Minitest::Test
 
     assert_equal 10, @encoder.determine_row_count(split_braille)
   end
-
 end
