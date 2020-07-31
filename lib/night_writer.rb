@@ -14,13 +14,17 @@ class NightWriter
     @reader = FileReader.new
     @writer = FileWriter.new
     @dictionary = Dictionary.new
-    print_sample_line
+    # print_sample_line
   end
 
   def print_sample_line
     char_count = @reader.read(@ARGV[0]).chomp.length
     puts "Created '#{@ARGV[1]}' containing #{char_count} characters"
     "Created '#{@ARGV[1]}' containing #{char_count} characters"
+  end
+
+  def read_file
+    message_string = @reader.read(@ARGV[0])
   end
 end
 # For testing that sample line prints correctly
