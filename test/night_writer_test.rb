@@ -22,22 +22,29 @@ class NightWriterTest < Minitest::Test
   end
 
   def test_write_file
-    @encoder.write_file("hello world")
+    @encoder.write_file("hello world", "braille.txt")
 
     assert_equal "hello world", File.read("braille.txt")
   end
 
   def test_read_file
-    expected = "hello world\n"
-    @encoder.write_file("hello world")
+    @encoder.write_file("hello world", "message.txt")
+    expected = "hello world"
 
     assert_equal expected, @encoder.read_file
   end
 
   def test_split_message
+    @encoder.write_file("hello world", "message.txt")
     expected = ["h", "e", "l", "l", "o", "w", "o", "r", "l", "d"]
-    @encoder.write_file("hello world")
 
     assert_equal expected, @encoder.split_message
+  end
+
+  def test_encode_to_braille
+    @encoder.write_file("hello world", "message.txt")
+    expected = ["o.", "oo", "..", "o.", ".o", "..", "o.", "o.", "o.", "o.", "o.", "o.", "o.", ".o", "o.", ".o", "oo", ".o", "o.", ".o", "o.", "o.", "oo", "o.", "o.", "o.", "o.", "oo", ".o", ".."]
+
+    assert_equal expected, @encoder.encode_to_braille.split("\n")
   end
 end
