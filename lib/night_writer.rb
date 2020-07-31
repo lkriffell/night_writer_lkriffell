@@ -23,9 +23,9 @@ class NightWriter
     "Created '#{@ARGV[1]}' containing #{char_count} characters"
   end
 
-  def write_file(translation)
+  def write_file(translation, filename)
     # translation = "hello world"
-    @writer.write(translation, @ARGV[1])
+    @writer.write(translation, filename)
   end
 
   def read_file
@@ -38,7 +38,14 @@ class NightWriter
     split_chars = message_string.chomp.split("")
   end
 
-
+  def encode_to_braille
+    split_msg = split_message
+    new_message = ''
+    split_msg.each do |char|
+      new_message += @dictionary.to_braille_conversion[char]
+    end
+    new_message
+  end
 end
 # For testing that sample line prints correctly
 # bob = NightWriter.new
