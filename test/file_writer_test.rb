@@ -15,7 +15,8 @@ class FileWriterTest < Minitest::Test
 
   def test_write
     translation = "o.\noo\n..\n"
-    @writer.write(translation)
+    filename = "braille.txt"
+    @writer.write(translation, filename)
 
     assert_equal "o.\noo\n..\n", File.read("braille.txt")
   end
