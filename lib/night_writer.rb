@@ -24,7 +24,6 @@ class NightWriter
   end
 
   def write_file(translation, filename)
-    # translation = "hello world"
     @writer.write(translation, filename)
   end
 
@@ -45,6 +44,46 @@ class NightWriter
       new_message += @dictionary.to_braille_conversion[char]
     end
     new_message
+  end
+
+  def translate_for_output
+    encoded_message = encode_to_braille
+    split_braille = encoded_message.split("\n")
+    char_count_by_row = determine_row_count(split_braille)
+    message_to_output = ""
+    first_index = 0
+    second_index = 1
+    third_index = 2
+    while split_braille.size > third_index
+      char_count_by_row.times do
+        message_to_output += split_braille[first_index]
+        first_index += 3
+      end
+      message_to_output += "\n"
+      char_count_by_row.times do
+        message_to_output += split_braille[second_index]
+        second_index += 3
+      end
+      message_to_output += "\n"
+      char_count_by_row.times do
+        message_to_output += split_braille[third_index]
+        third_index += 3
+      end
+      message_to_output += "\n"
+    end
+    message_to_output
+  end
+
+  def determine_row_count(split_braille)
+    if split_braille.size < 80
+      char_count_by_row = split_braille.size / 3 #3 rows
+    elsif split_braille.size >= 80 && split_braille.size < 160
+      char_count_by_row = split_braille.size / 6 #6 rows
+    elsif split_braille.size >= 160 && split_braille.size < 240
+      char_count_by_row = split_braille.size / 9 #9 rows
+    elsif split_braille.size >= 240 && split_braille.size < 320
+      char_count_by_row = split_braille.size / 12 #12 rows
+    end
   end
 end
 # For testing that sample line prints correctly
