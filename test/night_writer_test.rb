@@ -21,6 +21,12 @@ class NightWriterTest < Minitest::Test
     assert_equal "Created 'braille.txt' containing 11 characters", @encoder.print_sample_line
   end
 
+  def test_write_file
+    @encoder.write_file
+
+    assert_equal "hello_world", File.read("braille.txt")
+  end
+
   def test_read_file
     expected = "hello world"
 
