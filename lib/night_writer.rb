@@ -37,7 +37,6 @@ class NightWriter
 
   def split_message
     message_string = read_file
-    # message_string = message_string.gsub(" ", "")
     split_chars = message_string.chomp.split("")
   end
 
