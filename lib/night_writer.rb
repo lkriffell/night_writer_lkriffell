@@ -23,13 +23,19 @@ class NightWriter
     "Created '#{@ARGV[1]}' containing #{char_count} characters"
   end
 
-  def write_file
-    translation = "hello world"
+  def write_file(translation)
+    # translation = "hello world"
     @writer.write(translation, @ARGV[1])
   end
 
   def read_file
     message_string = @reader.read(@ARGV[0])
+  end
+
+  def split_message
+    message_string = read_file
+    message_string = message_string.gsub(" ", "")
+    split_chars = message_string.chomp.split("")
   end
 
 
