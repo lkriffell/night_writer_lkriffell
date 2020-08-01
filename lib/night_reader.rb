@@ -52,10 +52,10 @@ class NightReader
     while index < split_msg[0].size
       full_braille_char = ''
       split_msg.each do |line|
-        # line.each do |one_third_char|
-          # require "pry"; binding.pry
+        if line[index] != nil
+          # Think the problem is here, its wanting to put the whole line in instead of getting each char out of all three lines
           full_braille_char += line[index]
-        # end
+        end
       end
       formed_chars << full_braille_char
       index += 1
@@ -67,10 +67,11 @@ class NightReader
     formed_chars = form_braille_characters
     new_message = ''
     formed_chars.each do |char|
-      new_message += @dictionary.to_english_conversion[char]
+      require "pry"; binding.pry
       new_message += @dictionary.to_english_conversion[char]
     end
     new_message
   end
 end
+# ruby ./lib/night_reader.rb braille.txt original_message.txt
 night_reader = NightReader.new
