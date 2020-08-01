@@ -16,7 +16,7 @@ class NightWriter
     @writer = FileWriter.new
     @dictionary = Dictionary.new
     @braille = translate_for_output
-    write_file(@braille, @ARGV[1])
+    # write_file(@braille, ARGV[1])
     # print_sample_line
     # print_braille_message
   end
@@ -92,6 +92,6 @@ class NightWriter
 
 end
 # For testing that translation works properly and braille.txt recieves the translated message
-encoder = NightWriter.new
-encoder.write_file(encoder.braille, ARGV[1])
-require "pry"; binding.pry
+# encoder = NightWriter.new
+# encoder.write_file(encoder.braille, ARGV[1])
+# require "pry"; binding.pry
