@@ -43,11 +43,11 @@ class NightWriterTest < Minitest::Test
   def test_encode_to_braille
     expected = ["0.", "00", "..", "0.", ".0", "..", "0.", "0.", "0.", "0.", "0.", "0.", "0.", ".0", "0.", "..", "..", "..", ".0", "00", ".0", "0.", ".0", "0.", "0.", "00", "0.", "0.", "0.", "0.", "00", ".0", ".."]
 
-    assert_equal expected, @encoder.encode_to_braille.split("\n")
+    assert_equal expected, @encoder.encode_to_braille
   end
 
   def test_translate_for_output
-    expected = ["00.00.0..0..00.0000..0", "....0.0.0....00.0.0..."]
+    expected = ["0.0.0.0.0....00.0.0.00", "00.00.0..0..00.0000..0", "....0.0.0....00.0.0..."]
 
     assert_equal expected, @encoder.translate_for_output.split("\n")
   end
