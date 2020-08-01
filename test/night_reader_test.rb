@@ -6,6 +6,8 @@ class NightReaderTest < Minitest::Test
 
   def setup
     @night_reader = NightReader.new
+    @night_reader.write_file("000..0.0.00.0...000.0.00.0\n....0.0.0.0..0..0.00.00.0.\n0...0.0...00....0.0.0.0.0.", "braille.txt")
+
   end
 
   def test_it_exists
@@ -25,7 +27,7 @@ class NightReaderTest < Minitest::Test
   end
 
   def test_write_file
-    @night_reader.write_file("hello world", "message.txt")
+    @night_reader.write_file("000..0.0.00.0...000.0.00.0\n....0.0.0.0..0..0.00.00.0.\n0...0.0...00....0.0.0.0.0.", "braille.txt")
 
     assert_equal "hello world", File.read("message.txt")
   end
@@ -37,11 +39,16 @@ class NightReaderTest < Minitest::Test
   end
 
   def test_split_message
-    expected = ["00","0.",".0",".0",".0","0.","0.","..","00","0.","0.","00",".0",
-                "..","..","0.","0.","0.","0.",".0","..","0.","00",".0","0.","0.",
-                "0.","..","0.","0.","..","00","..","..","0.","0.","0.","0.","0."]
+    expected = [["00","0.",".0",".0",".0","0.","0.","..","00","0.","0.","00",".0"],
+                ["..","..","0.","0.","0.","0.",".0","..","0.","00",".0","0.","0."],
+                ["0.","..","0.","0.","..","00","..","..","0.","0.","0.","0.","0."]]
 
     assert_equal expected, @night_reader.split_message
   end
 
+  def test_encode_to_english
+    expected = "massive props"
+
+    assert_equal expected, @night_reader.encode_to_english
+  end
 end
