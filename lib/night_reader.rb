@@ -14,6 +14,8 @@ class NightReader
     @reader = FileReader.new
     @writer = FileWriter.new
     @dictionary = Dictionary.new
+    @first_row_of_chars = 0
+    @third_row_of_chars = 2
     # Uncomment when ready to run
     # @english = encode_to_english
     # write_file(@english, ARGV[1])
@@ -50,8 +52,6 @@ class NightReader
     formed_chars = []
     position_on_line = 0 # position_on_line
     counter = 0
-    first_row_of_chars = 0 # first_row_of_chars
-    third_row_of_chars = 2 # third_row_of_chars_of_chars
     all_characters = split_msg[0].size * split_msg.size
     while counter <= all_characters
       one_char = ''
@@ -64,8 +64,8 @@ class NightReader
       end
       if position_on_line == split_msg[0].size - 1
         position_on_line = 0
-        first_row_of_chars += 3
-        third_row_of_chars += 3
+        @first_row_of_chars += 3
+        @third_row_of_chars += 3
         counter += 1
       else
         position_on_line += 1
