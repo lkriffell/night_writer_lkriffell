@@ -36,13 +36,32 @@ class NightReader
   end
 
   def split_message
-    split_chars = []
     message_string = read_file
     split_lines = message_string.split("\n")
+    split_line_chars = []
     split_lines.each do |line|
-      split_chars << line.scan(/.{1,2}/m)
+      split_line_chars << line.scan(/.{1,2}/m)
     end
-    split_chars.flatten
+    split_line_chars
+  end
+
+  def encode_to_english
+    split_msg = split_message
+    all_chars = []
+    index = 0
+    while index < split_msg[0].size
+      full_braille_char = ''
+      split_msg.each do |line|
+        full_braille_char += line[index]
+      end
+      all_chars << full_braille_char
+      index += 1
+    end
+    new_message = ''
+    all_chars.map do |char|
+      new_message += @dictionary.to_english_conversion[char]
+    end
+    new_message
   end
 end
 # night_reader = NightReader.new
