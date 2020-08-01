@@ -100,8 +100,6 @@ class NightWriter
     message_to_output
 
   end
-
-
 end
 # ruby ./lib/night_writer.rb message.txt braille.txt
 # encoder = NightWriter.new
