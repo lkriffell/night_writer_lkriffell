@@ -36,4 +36,12 @@ class NightReaderTest < Minitest::Test
     assert_equal expected, @night_reader.read_file.split("\n")
   end
 
+  def test_split_message
+    expected = ["00","0.",".0",".0",".0","0.","0.","..","00","0.","0.","00",".0",
+                "..","..","0.","0.","0.","0.",".0","..","0.","00",".0","0.","0.",
+                "0.","..","0.","0.","..","00","..","..","0.","0.","0.","0.","0."]
+
+    assert_equal expected, @night_reader.split_message
+  end
+
 end
