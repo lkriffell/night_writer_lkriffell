@@ -16,7 +16,7 @@ class Dictionary
     @to_braille_conversion["d"] = "00.0.."
     @to_braille_conversion["e"] = "0..0.."
     @to_braille_conversion["f"] = "000..."
-    @to_braille_conversion["g"] = "000..."
+    @to_braille_conversion["g"] = "0000.."
     @to_braille_conversion["h"] = "0.00.."
     @to_braille_conversion["i"] = ".00..."
     @to_braille_conversion["j"] = ".000.."#234
