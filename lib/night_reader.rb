@@ -14,9 +14,9 @@ class NightReader
     @reader = FileReader.new
     @writer = FileWriter.new
     @dictionary = Dictionary.new
-    # @braille = translate_for_output
-    # write_file(@english, @ARGV[1])
     # Uncomment when ready to run
+    # @english = encode_to_english
+    # write_file(@english, ARGV[1])
     # print_sample_line
   end
 
@@ -45,25 +45,28 @@ class NightReader
     split_line_chars
   end
 
-  def encode_to_english
+  def form_braille_characters
     split_msg = split_message
-    all_chars = []
+    formed_chars = []
     index = 0
     while index < split_msg[0].size
       full_braille_char = ''
       split_msg.each do |line|
         full_braille_char += line[index]
       end
-      all_chars << full_braille_char
+      formed_chars << full_braille_char
       index += 1
     end
+    formed_chars
+  end
+
+  def encode_to_english
+    formed_chars = form_braille_characters
     new_message = ''
-    all_chars.map do |char|
+    formed_chars.map do |char|
       new_message += @dictionary.to_english_conversion[char]
     end
     new_message
   end
 end
 # night_reader = NightReader.new
-# night_reader.write_file(night_reader.braille, ARGV[1])
-# require "pry"; binding.pry
