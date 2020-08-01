@@ -65,7 +65,9 @@ class NightReader
     while @position_on_line < splitted_msg[0].size
       one_char = ''
       splitted_msg.each do |line|
+        if line[@position_on_line] != nil
           one_char += line[@position_on_line]
+        end
       end
       @formed_chars << one_char
       check_position_on_line(splitted_msg)
