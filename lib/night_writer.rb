@@ -10,20 +10,21 @@ class NightWriter
               :braille
 
   def initialize
-    # For testing: remove @ from argv wherever used when ready to run from comman line
+    # For testing: remove @ from argv wherever used when ready to run from command line
     @ARGV = ["message.txt", "braille.txt"]
     @reader = FileReader.new
     @writer = FileWriter.new
     @dictionary = Dictionary.new
     # Uncomment when ready to run
-    # @braille = translate_for_output
-    # write_file(@braille, ARGV[1])
-    # print_sample_line
+    @braille = translate_for_output
+    write_file(@braille, ARGV[1])
+    print_sample_line
+    # ---------------
   end
 
   def print_sample_line
-    char_count = @reader.read(@ARGV[0]).chomp.length
-    sample_line = "Created '#{@ARGV[1]}' containing #{char_count} characters"
+    char_count = @reader.read(ARGV[0]).chomp.length
+    sample_line = "Created '#{ARGV[1]}' containing #{char_count} characters"
     puts sample_line
     sample_line
   end
@@ -33,7 +34,7 @@ class NightWriter
   end
 
   def read_file
-    @reader.read(@ARGV[0])
+    @reader.read(ARGV[0])
   end
 
   def split_message
@@ -55,10 +56,12 @@ class NightWriter
       split_braille.size / 3 #3 rows
     elsif split_braille.size >= 80 && split_braille.size < 160
       split_braille.size / 6 #6 rows
-    elsif split_braille.size >= 160 && split_braille.size < 240
+    elsif split_braille.size >= 160 && split_braille.size < 256
       split_braille.size / 9 #9 rows
-    elsif split_braille.size >= 240 && split_braille.size < 320
-      split_braille.size / 12 #12 rows
+    # elsif split_braille.size >= 240 && split_braille.size < 256
+    #   split_braille.size / 12 #12 rows
+    else
+      puts "Youre message was too long" 
     end
   end
 
@@ -91,4 +94,5 @@ class NightWriter
 
 
 end
-# encoder = NightWriter.new
+encoder = NightWriter.new
+require "pry"; binding.pry
