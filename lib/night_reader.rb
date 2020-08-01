@@ -34,6 +34,16 @@ class NightReader
   def read_file
     message_string = @reader.read(@ARGV[0])
   end
+
+  def split_message
+    split_chars = []
+    message_string = read_file
+    split_lines = message_string.split("\n")
+    split_lines.each do |line|
+      split_chars << line.scan(/.{1,2}/m)
+    end
+    split_chars.flatten
+  end
 end
 # night_reader = NightReader.new
 # night_reader.write_file(night_reader.braille, ARGV[1])
