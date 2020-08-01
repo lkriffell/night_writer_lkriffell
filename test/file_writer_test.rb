@@ -1,6 +1,7 @@
-require "minitest/autorun"
-require "minitest/pride"
-require "./lib/file_writer"
+require "./test/test_helper"
+# require "minitest/autorun"
+# require "minitest/pride"
+# require "./lib/file_writer"
 
 class FileWriterTest < Minitest::Test
 
