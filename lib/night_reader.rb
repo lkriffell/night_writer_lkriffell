@@ -26,6 +26,14 @@ class NightReader
     puts sample_line
     sample_line
   end
+
+  def write_file(translation, filename)
+    @writer.write(translation, filename)
+  end
+
+  def read_file
+    message_string = @reader.read(@ARGV[0])
+  end
 end
 # night_reader = NightReader.new
 # night_reader.write_file(night_reader.braille, ARGV[1])
