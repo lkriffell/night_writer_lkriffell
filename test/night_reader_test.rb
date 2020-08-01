@@ -46,6 +46,13 @@ class NightReaderTest < Minitest::Test
     assert_equal expected, @night_reader.split_message
   end
 
+  def test_form_braille_characters
+    expected = ["00..0.", "0.....", ".00.0.", ".00.0.", ".00...", "0.0.00", "0..0..",
+                "......", "000.0.", "0.000.", "0..00.", "000.0.", ".00.0."]
+
+    assert_equal expected, @night_reader.form_braille_characters
+  end
+
   def test_encode_to_english
     expected = "massive props"
 
