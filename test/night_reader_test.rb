@@ -19,9 +19,21 @@ class NightReaderTest < Minitest::Test
   end
 
   def test_print_sample_line
-    expected = "Created 'original_message.txt' containing 68 characters"
+    expected = "Created 'original_message.txt' containing 80 characters"
 
     assert_equal expected, @night_reader.print_sample_line
+  end
+
+  def test_write_file
+    @night_reader.write_file("hello world", "message.txt")
+
+    assert_equal "hello world", File.read("message.txt")
+  end
+
+  def test_read_file
+    expected = ["000..0.0.00.0...000.0.00.0", "....0.0.0.0..0..0.00.00.0.", "0...0.0...00....0.0.0.0.0."]
+
+    assert_equal expected, @night_reader.read_file.split("\n")
   end
 
 end
