@@ -48,26 +48,27 @@ class NightReader
   def form_braille_characters
     split_msg = split_message
     formed_chars = []
-    index = 0 # position_on_line
+    position_on_line = 0 # position_on_line
     counter = 0
     first_row_of_chars = 0 # first_row_of_chars
     third_row_of_chars = 2 # third_row_of_chars_of_chars
-    while counter <= split_msg[0].size * split_msg.size
+    all_characters = split_msg[0].size * split_msg.size
+    while counter <= all_characters
       one_char = ''
       if split_msg[first_row_of_chars..third_row_of_chars] != nil
         split_msg[first_row_of_chars..third_row_of_chars].each do |line|
-          if line[index] != nil
-            one_char += line[index]
+          if line[position_on_line] != nil
+            one_char += line[position_on_line]
           end
         end
       end
-      if index == split_msg[0].size - 1
-        index = 0
+      if position_on_line == split_msg[0].size - 1
+        position_on_line = 0
         first_row_of_chars += 3
         third_row_of_chars += 3
         counter += 1
       else
-        index += 1
+        position_on_line += 1
         counter += 1
       end
       if one_char != ""
