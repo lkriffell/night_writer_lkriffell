@@ -1,6 +1,7 @@
-require "minitest/autorun"
-require "minitest/pride"
-require "./lib/night_reader"
+require "./test/test_helper"
+# require "minitest/autorun"
+# require "minitest/pride"
+# require "./lib/night_reader"
 
 class NightReaderTest < Minitest::Test
 
