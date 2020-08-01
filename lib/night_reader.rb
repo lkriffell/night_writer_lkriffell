@@ -10,19 +10,19 @@ class NightReader
 
   def initialize
     # For testing: remove @ from argv wherever used when ready to run from comman line
-    # @ARGV = ["braille.txt", "original_message.txt"]
+    @ARGV = ["braille.txt", "original_message.txt"]
     @reader = FileReader.new
     @writer = FileWriter.new
     @dictionary = Dictionary.new
     # Uncomment when ready to run
-    @english = encode_to_english
-    write_file(@english, ARGV[1])
-    print_sample_line
+    # @english = encode_to_english
+    # write_file(@english, ARGV[1])
+    # print_sample_line
   end
 
   def print_sample_line
-    char_count = @reader.read(ARGV[0]).chomp.length
-    sample_line = "Created '#{ARGV[1]}' containing #{char_count} characters"
+    char_count = @reader.read(@ARGV[0]).chomp.length
+    sample_line = "Created '#{@ARGV[1]}' containing #{char_count} characters"
     puts sample_line
     sample_line
   end
@@ -32,7 +32,7 @@ class NightReader
   end
 
   def read_file
-    message_string = @reader.read(ARGV[0])
+    message_string = @reader.read(@ARGV[0])
   end
 
   def split_message
@@ -69,4 +69,4 @@ class NightReader
     new_message
   end
 end
-night_reader = NightReader.new
+# night_reader = NightReader.new

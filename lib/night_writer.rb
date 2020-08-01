@@ -11,18 +11,19 @@ class NightWriter
 
   def initialize
     # For testing: remove @ from argv wherever used when ready to run from comman line
-    # @ARGV = ["message.txt", "braille.txt"]
+    @ARGV = ["message.txt", "braille.txt"]
     @reader = FileReader.new
     @writer = FileWriter.new
     @dictionary = Dictionary.new
-    @braille = translate_for_output
-    write_file(@braille, ARGV[1])
-    print_sample_line
+    # Uncomment when ready to run
+    # @braille = translate_for_output
+    # write_file(@braille, ARGV[1])
+    # print_sample_line
   end
 
   def print_sample_line
-    char_count = @reader.read(ARGV[0]).chomp.length
-    sample_line = "Created '#{ARGV[1]}' containing #{char_count} characters"
+    char_count = @reader.read(@ARGV[0]).chomp.length
+    sample_line = "Created '#{@ARGV[1]}' containing #{char_count} characters"
     puts sample_line
     sample_line
   end
@@ -32,7 +33,7 @@ class NightWriter
   end
 
   def read_file
-    @reader.read(ARGV[0])
+    @reader.read(@ARGV[0])
   end
 
   def split_message
@@ -90,5 +91,4 @@ class NightWriter
 
 
 end
-# For testing that translation works properly and braille.txt recieves the translated message
-encoder = NightWriter.new
+# encoder = NightWriter.new
