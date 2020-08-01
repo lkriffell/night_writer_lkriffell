@@ -58,9 +58,10 @@ class NightWriterTest < Minitest::Test
     test_array_160 = ('1'..'159').to_a
     test_array_240 = ('1'..'239').to_a
     test_array_320 = ('1'..'319').to_a
-    require "pry"; binding.pry
+
     assert_equal 10, @encoder.determine_row_count(split_braille)
     assert_equal 26, @encoder.determine_row_count(test_array_160)
+    assert_equal 26, @encoder.determine_row_count(test_array_240)
     assert_equal 26, @encoder.determine_row_count(test_array_320)
   end
 end
