@@ -52,13 +52,13 @@ class NightWriter
 
   def determine_row_count(split_braille)
     if split_braille.size < 80
-      char_count_by_row = split_braille.size / 3 #3 rows
+      split_braille.size / 3 #3 rows
     elsif split_braille.size >= 80 && split_braille.size < 160
-      char_count_by_row = split_braille.size / 6 #6 rows
+      split_braille.size / 6 #6 rows
     elsif split_braille.size >= 160 && split_braille.size < 240
-      char_count_by_row = split_braille.size / 9 #9 rows
+      split_braille.size / 9 #9 rows
     elsif split_braille.size >= 240 && split_braille.size < 320
-      char_count_by_row = split_braille.size / 12 #12 rows
+      split_braille.size / 12 #12 rows
     end
   end
 

@@ -32,7 +32,7 @@ class NightReader
   end
 
   def read_file
-    message_string = @reader.read(@ARGV[0])
+    @reader.read(@ARGV[0])
   end
 
   def split_message
