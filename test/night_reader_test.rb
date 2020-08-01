@@ -29,8 +29,9 @@ class NightReaderTest < Minitest::Test
 
   def test_write_file
     @night_reader.write_file("000..0.0.00.0...000.0.00.0\n....0.0.0.0..0..0.00.00.0.\n0...0.0...00....0.0.0.0.0.", "braille.txt")
+    expected = "000..0.0.00.0...000.0.00.0\n....0.0.0.0..0..0.00.00.0.\n0...0.0...00....0.0.0.0.0."
 
-    assert_equal "hello world", File.read("message.txt")
+    assert_equal expected, File.read("braille.txt")
   end
 
   def test_read_file
@@ -49,11 +50,28 @@ class NightReaderTest < Minitest::Test
     assert_equal expected, @night_reader.split_message
   end
 
-  def test_form_braille_characters
-    expected = [["0.00.."], ["0..0.."], ["0.0.0."], ["0.0.0."], ["0..00."], ["......"],
-                [".000.0"], ["0..00."], ["0.000."], ["0.0.0."], ["00.0.."]]
+  def test_collect_braille_characters
+    expected = [
+                "0.00..", "0..0..", "0.0.0.", "0.0.0.", "0..00.", "......",
+                ".000.0", "0..00.", "0.000.", "0.0.0.", "00.0.."
+              ]
 
-    assert_equal expected, @night_reader.form_braille_characters
+    assert_equal expected, @night_reader.collect_braille_characters
+  end
+
+  def test_form_braille_characters
+    splitted_msg = [
+                    ["0.", "0.", "0.", "0.", "0.", "..", ".0", "0.", "0.", "0.", "00"],
+                    ["00", ".0", "0.", "0.", ".0", "..", "00", ".0", "00", "0.", ".0"],
+                    ["..", "..", "0.", "0.", "0.", "..", ".0", "0.", "0.", "0.", ".."]
+                  ]
+
+    expected = [
+                "0.00..", "0..0..", "0.0.0.", "0.0.0.", "0..00.", "......",
+                ".000.0", "0..00.", "0.000.", "0.0.0.", "00.0.."
+              ]
+
+    assert_equal expected, @night_reader.form_braille_characters(splitted_msg)
   end
 
   def test_encode_to_english
