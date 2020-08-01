@@ -16,6 +16,9 @@ class NightReader
     @dictionary = Dictionary.new
     @first_row_of_chars = 0
     @third_row_of_chars = 2
+    @position_on_line = 0
+    @counter = 0
+    @formed_chars = []
     # Uncomment when ready to run
     # @english = encode_to_english
     # write_file(@english, ARGV[1])
@@ -47,46 +50,56 @@ class NightReader
     split_line_chars
   end
 
-  def form_braille_characters
-    split_msg = split_message
-    formed_chars = []
-    position_on_line = 0 # position_on_line
-    counter = 0
-    all_characters = split_msg[0].size * split_msg.size
-    while counter <= all_characters
-      one_char = ''
-      if split_msg[first_row_of_chars..third_row_of_chars] != nil
-        split_msg[first_row_of_chars..third_row_of_chars].each do |line|
-          if line[position_on_line] != nil
-            one_char += line[position_on_line]
-          end
-        end
-      end
-      if position_on_line == split_msg[0].size - 1
-        position_on_line = 0
-        @first_row_of_chars += 3
-        @third_row_of_chars += 3
-        counter += 1
-      else
-        position_on_line += 1
-        counter += 1
-      end
-      if one_char != ""
-        formed_chars << [one_char]
-      end
-    end
-    formed_chars
+  def collect_braille_characters
+    splitted_msg = split_message
+    form_braille_characters(splitted_msg)
   end
 
   def encode_to_english
-    formed_chars = form_braille_characters
+    all_chars = collect_braille_characters
     original_message = ''
-    if formed_chars != nil
-      formed_chars.each do |char|
-          original_message += @dictionary.to_english_conversion[char[0]]
-        end
+    all_chars.each do |char|
+      original_message += @dictionary.to_english_conversion[char]
     end
     original_message
+  end
+
+  def form_braille_characters(splitted_msg)
+    all_characters = splitted_msg[0].size * splitted_msg.size
+    while @counter <= all_characters
+      one_char = ''
+      if splitted_msg[@first_row_of_chars..@third_row_of_chars] != nil
+        splitted_msg[@first_row_of_chars..@third_row_of_chars].each do |line|
+          if line[@position_on_line] != nil
+            one_char += line[@position_on_line]
+          end
+        end
+      end
+      check_position_in_line(splitted_msg, one_char)
+    end
+    @formed_chars
+  end
+
+  def check_position_in_line(splitted_msg, one_char)
+    if @position_on_line == splitted_msg[0].size - 1
+      # move to the next line
+      @position_on_line = 0
+      @first_row_of_chars += 3
+      @third_row_of_chars += 3
+      @counter += 1
+    else
+      # move to the next character in the line
+      @position_on_line += 1
+      @counter += 1
+    end
+    add_fully_formed_character(one_char)
+  end
+
+  def add_fully_formed_character(one_char)
+    if one_char != ""
+      @formed_chars << one_char
+    end
+    @formed_chars
   end
 end
 # ruby ./lib/night_reader.rb braille.txt original_message.txt
