@@ -16,15 +16,15 @@ class NightWriter
     @writer = FileWriter.new
     @dictionary = Dictionary.new
     # Uncomment when ready to run
-    @braille = translate_for_output
-    write_file(@braille, ARGV[1])
-    print_sample_line
+    # @braille = translate_for_output
+    # write_file(@braille, ARGV[1])
+    # print_sample_line
     # ---------------
   end
 
   def print_sample_line
-    char_count = @reader.read(ARGV[0]).chomp.length
-    sample_line = "Created '#{ARGV[1]}' containing #{char_count} characters"
+    char_count = @reader.read(@ARGV[0]).chomp.length
+    sample_line = "Created '#{@ARGV[1]}' containing #{char_count} characters"
     puts sample_line
     sample_line
   end
@@ -34,7 +34,7 @@ class NightWriter
   end
 
   def read_file
-    @reader.read(ARGV[0])
+    @reader.read(@ARGV[0])
   end
 
   def split_message
@@ -61,7 +61,9 @@ class NightWriter
     # elsif split_braille.size >= 240 && split_braille.size < 256
     #   split_braille.size / 12 #12 rows
     else
-      puts "Youre message was too long" 
+      error_message = "Youre message was too long!!!"
+      puts error_message
+      error_message
     end
   end
 
@@ -74,25 +76,33 @@ class NightWriter
     third_index = 2
     while split_braille.size > third_index
       char_count_by_row.times do
-        message_to_output += split_braille[first_index]
-        first_index += 3
+        if split_braille[first_index] != nil
+          message_to_output += split_braille[first_index]
+          first_index += 3
+        end
       end
       message_to_output += "\n"
       char_count_by_row.times do
-        message_to_output += split_braille[second_index]
-        second_index += 3
+        if split_braille[second_index] != nil
+          message_to_output += split_braille[second_index]
+          second_index += 3
+        end
       end
       message_to_output += "\n"
       char_count_by_row.times do
-        message_to_output += split_braille[third_index]
-        third_index += 3
+        if split_braille[third_index] != nil
+          message_to_output += split_braille[third_index]
+          third_index += 3
+        end
       end
       message_to_output += "\n"
     end
     message_to_output
+
   end
 
 
 end
-encoder = NightWriter.new
-require "pry"; binding.pry
+# ruby ./lib/night_writer.rb message.txt braille.txt
+# encoder = NightWriter.new
+# require "pry"; binding.pry
