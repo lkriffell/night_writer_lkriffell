@@ -49,24 +49,44 @@ class NightReader
     split_msg = split_message
     formed_chars = []
     index = 0
-    while index < split_msg[0].size
-      full_braille_char = ''
-      split_msg.each do |line|
-        full_braille_char += line[index]
+    counter = 0
+    first_line = 0
+    third_line = 2
+    while counter <= split_msg[0].size * split_msg.size
+      one_char = ''
+      if split_msg[first_line..third_line] != nil
+        split_msg[first_line..third_line].each do |line|
+          if line[index] != nil
+            one_char += line[index]
+          end
+        end
       end
-      formed_chars << full_braille_char
-      index += 1
+      if index == split_msg[0].size - 1
+        index = 0
+        first_line += 3
+        third_line += 3
+        counter += 1
+      else
+        index += 1
+        counter += 1
+      end
+      if one_char != ""
+        formed_chars << [one_char]
+      end
     end
     formed_chars
   end
 
   def encode_to_english
     formed_chars = form_braille_characters
-    new_message = ''
-    formed_chars.map do |char|
-      new_message += @dictionary.to_english_conversion[char]
+    original_message = ''
+    if formed_chars != nil
+      formed_chars.each do |char|
+          original_message += @dictionary.to_english_conversion[char[0]]
+        end
     end
-    new_message
+    original_message
   end
 end
+# ruby ./lib/night_reader.rb braille.txt original_message.txt
 # night_reader = NightReader.new
