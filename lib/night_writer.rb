@@ -15,16 +15,17 @@ class NightWriter
     @reader = FileReader.new
     @writer = FileWriter.new
     @dictionary = Dictionary.new
-    @braille = translate_for_output
+    # Uncomment when ready to run
+    # @braille = translate_for_output
     # write_file(@braille, ARGV[1])
     # print_sample_line
-    # print_braille_message
   end
 
   def print_sample_line
     char_count = @reader.read(@ARGV[0]).chomp.length
-    puts "Created '#{@ARGV[1]}' containing #{char_count} characters"
-    "Created '#{@ARGV[1]}' containing #{char_count} characters"
+    sample_line = "Created '#{@ARGV[1]}' containing #{char_count} characters"
+    puts sample_line
+    sample_line
   end
 
   def write_file(translation, filename)
@@ -32,12 +33,12 @@ class NightWriter
   end
 
   def read_file
-    message_string = @reader.read(@ARGV[0])
+    @reader.read(@ARGV[0])
   end
 
   def split_message
     message_string = read_file
-    split_chars = message_string.chomp.split("")
+    message_string.chomp.split("")
   end
 
   def encode_to_braille
@@ -46,7 +47,7 @@ class NightWriter
     split_msg.each do |char|
       new_message += @dictionary.to_braille_conversion[char]
     end
-    new_message
+    new_message.scan(/.{1,2}/m)
   end
 
   def determine_row_count(split_braille)
@@ -62,8 +63,7 @@ class NightWriter
   end
 
   def translate_for_output
-    encoded_message = encode_to_braille
-    split_braille = encoded_message.split("\n")
+    split_braille = encode_to_braille
     char_count_by_row = determine_row_count(split_braille)
     message_to_output = ""
     first_index = 0
@@ -91,7 +91,4 @@ class NightWriter
 
 
 end
-# For testing that translation works properly and braille.txt recieves the translated message
 # encoder = NightWriter.new
-# encoder.write_file(encoder.braille, ARGV[1])
-# require "pry"; binding.pry
