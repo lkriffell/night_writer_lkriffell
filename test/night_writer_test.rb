@@ -57,11 +57,12 @@ class NightWriterTest < Minitest::Test
     split_braille = ["0.", "00", "..", "0.", ".0", "..", "0.", "0.", "0.", "0.", "0.", "0.", "0.", ".0", "0.", ".0", "00", ".0", "0.", ".0", "0.", "0.", "00", "0.", "0.", "0.", "0.", "00", ".0", ".."]
     test_array_160 = ('1'..'159').to_a
     test_array_240 = ('1'..'239').to_a
-    test_array_320 = ('1'..'319').to_a
+    test_array_257 = ('1'..'257').to_a
+
 
     assert_equal 10, @encoder.determine_row_count(split_braille)
     assert_equal 26, @encoder.determine_row_count(test_array_160)
     assert_equal 26, @encoder.determine_row_count(test_array_240)
-    assert_equal 26, @encoder.determine_row_count(test_array_320)
+    assert_equal "Youre message was too long!!!", @encoder.determine_row_count(test_array_257)
   end
 end
