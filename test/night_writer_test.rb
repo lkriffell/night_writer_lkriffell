@@ -1,12 +1,11 @@
 require "./test/test_helper"
-# require "minitest/autorun"
-# require "minitest/pride"
-# require "./lib/night_writer"
 
 class NightWriterTest < Minitest::Test
+  include Fileable
+
   def setup
     @encoder = NightWriter.new
-    test_write_file
+    write("hello world", "message.txt")
   end
 
   def test_it_exists
@@ -14,25 +13,12 @@ class NightWriterTest < Minitest::Test
   end
 
   def test_it_has_attributes
-    assert_instance_of FileReader, @encoder.reader
-    assert_instance_of FileWriter, @encoder.writer
     assert_instance_of Dictionary, @encoder.dictionary
   end
 
-  def test_print_sample_line
-    assert_equal "Created 'braille.txt' containing 11 characters", @encoder.print_sample_line
-  end
-
-  def test_write_file
-    @encoder.write_file("hello world", "message.txt")
-
-    assert_equal "hello world", File.read("message.txt")
-  end
-
-  def test_read_file
-    expected = "hello world"
-
-    assert_equal expected, @encoder.read_file
+  def test_create_sample_line
+    assert_equal "Created 'braille.txt' containing 11 characters", @encoder.create_sample_line
+    puts @encoder.create_sample_line
   end
 
   def test_split_message

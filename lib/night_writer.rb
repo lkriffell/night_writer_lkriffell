@@ -1,48 +1,34 @@
-require_relative "file_reader"
-require_relative "file_writer"
+require_relative "fileable"
 require_relative "dictionary"
 
 class NightWriter
+  include Fileable
 
-  attr_reader :reader,
-              :writer,
-              :dictionary,
+  attr_reader :dictionary,
               :braille
 
   def initialize
     # For testing: remove @ from argv wherever used when ready to run from command line
     @ARGV = ["message.txt", "braille.txt"]
-    @reader = FileReader.new
-    @writer = FileWriter.new
     @dictionary = Dictionary.new
     @fully_translated_for_output = ""
     @position_on_first_line = 0
     @position_on_second_line = 1
     @position_on_third_line = 2
     # Uncomment when ready to run
-    # @braille = arrange_for_output
-    # write_file(@braille, ARGV[1])
-    # print_sample_line
+    @braille = arrange_for_output
+    write(@braille, ARGV[1])
+    puts create_sample_line
     # ---------------
   end
 
-  def print_sample_line
-    char_count = @reader.read(@ARGV[0]).chomp.length
-    sample_line = "Created '#{@ARGV[1]}' containing #{char_count} characters"
-    puts sample_line
-    sample_line
-  end
-
-  def write_file(translation, filename)
-    @writer.write(translation, filename)
-  end
-
-  def read_file
-    @reader.read(@ARGV[0])
+  def create_sample_line
+    char_count = read(ARGV[0]).chomp.length
+    "Created '#{ARGV[1]}' containing #{char_count} characters"
   end
 
   def split_message
-    message_string = read_file
+    message_string = read(ARGV[0])
     message_string.chomp.split("")
   end
 
@@ -109,5 +95,4 @@ class NightWriter
   end
 end
 # ruby ./lib/night_writer.rb message.txt braille.txt
-# encoder = NightWriter.new
-# require "pry"; binding.pry
+encoder = NightWriter.new
