@@ -1,14 +1,12 @@
 require "./test/test_helper"
-# require "minitest/autorun"
-# require "minitest/pride"
-# require "./lib/night_reader"
 
 class NightReaderTest < Minitest::Test
+  include Fileable
 
   def setup
     @night_reader = NightReader.new
-    @night_reader.write_file("0.0.0.0.0....00.0.0.00\n00.00.0..0..00.0000..0\n....0.0.0....00.0.0...", "braille.txt")
-    @night_reader.write_file("hello world", "message.txt")
+    write("0.0.0.0.0....00.0.0.00\n00.00.0..0..00.0000..0\n....0.0.0....00.0.0...", "braille.txt")
+    write("hello world", "message.txt")
   end
 
   def test_it_exists
@@ -16,28 +14,14 @@ class NightReaderTest < Minitest::Test
   end
 
   def test_it_has_attributes
-    assert_instance_of FileReader, @night_reader.reader
-    assert_instance_of FileWriter, @night_reader.writer
     assert_instance_of Dictionary, @night_reader.dictionary
   end
 
-  def test_print_sample_line
+  def test_create_sample_line
     expected = "Created 'original_message.txt' containing 68 characters"
 
-    assert_equal expected, @night_reader.print_sample_line
-  end
-
-  def test_write_file
-    @night_reader.write_file("000..0.0.00.0...000.0.00.0\n....0.0.0.0..0..0.00.00.0.\n0...0.0...00....0.0.0.0.0.", "braille.txt")
-    expected = "000..0.0.00.0...000.0.00.0\n....0.0.0.0..0..0.00.00.0.\n0...0.0...00....0.0.0.0.0."
-
-    assert_equal expected, File.read("braille.txt")
-  end
-
-  def test_read_file
-    expected = ["0.0.0.0.0....00.0.0.00", "00.00.0..0..00.0000..0", "....0.0.0....00.0.0..."]
-
-    assert_equal expected, @night_reader.read_file.split("\n")
+    assert_equal expected, @night_reader.create_sample_line
+    puts @night_reader.create_sample_line
   end
 
   def test_split_message
