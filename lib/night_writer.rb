@@ -16,15 +16,15 @@ class NightWriter
     @writer = FileWriter.new
     @dictionary = Dictionary.new
     # Uncomment when ready to run
-    @braille = translate_for_output
-    write_file(@braille, ARGV[1])
-    print_sample_line
+    # @braille = arrange_for_output
+    # write_file(@braille, ARGV[1])
+    # print_sample_line
     # ---------------
   end
 
   def print_sample_line
-    char_count = @reader.read(ARGV[0]).chomp.length
-    sample_line = "Created '#{ARGV[1]}' containing #{char_count} characters"
+    char_count = @reader.read(@ARGV[0]).chomp.length
+    sample_line = "Created '#{@ARGV[1]}' containing #{char_count} characters"
     puts sample_line
     sample_line
   end
@@ -34,7 +34,7 @@ class NightWriter
   end
 
   def read_file
-    @reader.read(ARGV[0])
+    @reader.read(@ARGV[0])
   end
 
   def split_message
@@ -51,25 +51,21 @@ class NightWriter
     new_message.scan(/.{1,2}/m)
   end
 
-  def determine_row_count(split_braille)
-    if split_braille.size < 80
-      split_braille.size / 3 #3 rows
-    elsif split_braille.size >= 80 && split_braille.size < 160
-      split_braille.size / 6 #6 rows
-    elsif split_braille.size >= 160 && split_braille.size < 256
-      split_braille.size / 9 #9 rows
-    # elsif split_braille.size >= 240 && split_braille.size < 256
-    #   split_braille.size / 12 #12 rows
-    else
-      error_message = "Youre message was too long!!!"
-      puts error_message
-      error_message
+  def determine_row_size(split_braille)
+    denominator = 1
+    line_count = nil
+    while line_count.nil?
+      if split_braille.size / denominator <= 40
+        line_count = split_braille.size / denominator
+      end
+      denominator += 1
     end
+    line_count
   end
 
-  def translate_for_output
+  def arrange_for_output
     split_braille = encode_to_braille
-    char_count_by_row = determine_row_count(split_braille)
+    char_count_by_row = determine_row_size(split_braille)
     message_to_output = ""
     first_index = 0
     second_index = 1
@@ -102,5 +98,5 @@ class NightWriter
   end
 end
 # ruby ./lib/night_writer.rb message.txt braille.txt
-encoder = NightWriter.new
+# encoder = NightWriter.new
 # require "pry"; binding.pry
