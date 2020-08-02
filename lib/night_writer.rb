@@ -15,6 +15,10 @@ class NightWriter
     @reader = FileReader.new
     @writer = FileWriter.new
     @dictionary = Dictionary.new
+    @fully_translated_for_output = ""
+    @position_on_first_line = 0
+    @position_on_second_line = 1
+    @position_on_third_line = 2
     # Uncomment when ready to run
     # @braille = arrange_for_output
     # write_file(@braille, ARGV[1])
@@ -66,35 +70,42 @@ class NightWriter
   def arrange_for_output
     split_braille = encode_to_braille
     char_count_by_row = determine_row_size(split_braille)
-    message_to_output = ""
-    first_index = 0
-    second_index = 1
-    third_index = 2
-    while split_braille.size > third_index
-      char_count_by_row.times do
-        if split_braille[first_index] != nil
-          message_to_output += split_braille[first_index]
-          first_index += 3
-        end
-      end
-      message_to_output += "\n"
-      char_count_by_row.times do
-        if split_braille[second_index] != nil
-          message_to_output += split_braille[second_index]
-          second_index += 3
-        end
-      end
-      message_to_output += "\n"
-      char_count_by_row.times do
-        if split_braille[third_index] != nil
-          message_to_output += split_braille[third_index]
-          third_index += 3
-        end
-      end
-      message_to_output += "\n"
+    while split_braille.size > @position_on_third_line
+      collect_first_one_third_of_each_char(split_braille, char_count_by_row)
+      collect_second_one_third_of_each_char(split_braille, char_count_by_row)
+      collect_third_one_third_of_each_char(split_braille, char_count_by_row)
     end
-    message_to_output
+    @fully_translated_for_output
+  end
 
+  def collect_first_one_third_of_each_char(split_braille, char_count_by_row)
+    char_count_by_row.times do
+      if split_braille[@position_on_first_line] != nil
+        @fully_translated_for_output += split_braille[@position_on_first_line]
+        @position_on_first_line += 3
+      end
+    end
+    @fully_translated_for_output += "\n"
+  end
+
+  def collect_second_one_third_of_each_char(split_braille, char_count_by_row)
+    char_count_by_row.times do
+      if split_braille[@position_on_second_line] != nil
+        @fully_translated_for_output += split_braille[@position_on_second_line]
+        @position_on_second_line += 3
+      end
+    end
+    @fully_translated_for_output += "\n"
+  end
+
+  def collect_third_one_third_of_each_char(split_braille, char_count_by_row)
+    char_count_by_row.times do
+      if split_braille[@position_on_third_line] != nil
+        @fully_translated_for_output += split_braille[@position_on_third_line]
+        @position_on_third_line += 3
+      end
+    end
+    @fully_translated_for_output += "\n"
   end
 end
 # ruby ./lib/night_writer.rb message.txt braille.txt
