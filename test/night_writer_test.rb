@@ -65,4 +65,13 @@ class NightWriterTest < Minitest::Test
     assert_equal 38, @encoder.determine_row_size(test_size_500)
     assert_equal 40, @encoder.determine_row_size(test_size_1000)
   end
+
+  def test_collect_one_third_of_each_char
+    split_braille = ["0.", "00", "..", "0.", ".0", "..", "0.", "0.", "0.", "0.", "0.", "0.", "0.", ".0", "0.", ".0", "00", ".0", "0.", ".0", "0.", "0.", "00", "0.", "0.", "0.", "0.", "00", ".0", ".."]
+
+    assert_equal "0.0.0.0.0..00.0.0.00", @encoder.collect_first_one_third_of_each_char(split_braille, 100).delete("\n")
+    assert_equal "0.0.0.0.0..00.0.0.0000.00.0..000.0000..0", @encoder.collect_second_one_third_of_each_char(split_braille, 100).delete("\n")
+    assert_equal "0.0.0.0.0..00.0.0.0000.00.0..000.0000..0....0.0.0..00.0.0...", @encoder.collect_third_one_third_of_each_char(split_braille, 100).delete("\n")
+
+  end
 end
