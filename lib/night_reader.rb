@@ -14,18 +14,18 @@ class NightReader
     @position_on_line = 0
     @formed_chars = []
     # Uncomment when ready to run
-    @english = encode_to_english
-    write(@english, ARGV[1])
-    puts create_sample_line
+    # @english = encode_to_english
+    # write(@english, ARGV[1])
+    # puts create_sample_line
   end
 
   def create_sample_line
-    char_count = read(ARGV[0]).chomp.length
-    "Created '#{ARGV[1]}' containing #{char_count} characters"
+    char_count = read(@ARGV[0]).chomp.length
+    "Created '#{@ARGV[1]}' containing #{char_count} characters"
   end
 
   def split_message
-    message_string = read(ARGV[0])
+    message_string = read(@ARGV[0])
     split_lines = message_string.split("\n")
     split_line_chars = []
     split_lines.each do |line|
@@ -92,4 +92,4 @@ class NightReader
   end
 end
 # ruby ./lib/night_reader.rb braille.txt original_message.txt
-night_reader = NightReader.new
+# night_reader = NightReader.new

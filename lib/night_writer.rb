@@ -16,19 +16,19 @@ class NightWriter
     @position_on_second_line = 1
     @position_on_third_line = 2
     # Uncomment when ready to run
-    @braille = arrange_for_output
-    write(@braille, ARGV[1])
-    puts create_sample_line
+    # @braille = arrange_for_output
+    # write(@braille, ARGV[1])
+    # puts create_sample_line
     # ---------------
   end
 
   def create_sample_line
-    char_count = read(ARGV[0]).chomp.length
-    "Created '#{ARGV[1]}' containing #{char_count} characters"
+    char_count = read(@ARGV[0]).chomp.length
+    "Created '#{@ARGV[1]}' containing #{char_count} characters"
   end
 
   def split_message
-    message_string = read(ARGV[0])
+    message_string = read(@ARGV[0])
     message_string.chomp.split("")
   end
 
@@ -95,4 +95,4 @@ class NightWriter
   end
 end
 # ruby ./lib/night_writer.rb message.txt braille.txt
-encoder = NightWriter.new
+# encoder = NightWriter.new
