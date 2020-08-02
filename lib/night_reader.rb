@@ -17,14 +17,14 @@ class NightReader
     @position_on_line = 0
     @formed_chars = []
     # Uncomment when ready to run
-    @english = encode_to_english
-    write_file(@english, ARGV[1])
-    print_sample_line
+    # @english = encode_to_english
+    # write_file(@english, ARGV[1])
+    # print_sample_line
   end
 
   def print_sample_line
-    char_count = @reader.read(ARGV[0]).chomp.length
-    sample_line = "Created '#{ARGV[1]}' containing #{char_count} characters"
+    char_count = @reader.read(@ARGV[0]).chomp.length
+    sample_line = "Created '#{@ARGV[1]}' containing #{char_count} characters"
     puts sample_line
     sample_line
   end
@@ -34,7 +34,7 @@ class NightReader
   end
 
   def read_file
-    @reader.read(ARGV[0])
+    @reader.read(@ARGV[0])
   end
 
   def split_message
@@ -87,13 +87,22 @@ class NightReader
     ordered_lines = Hash.new { |hash, key| hash[key] = []}
     @formed_chars.each do |chars|
       chars_with_matching_line_position = chars.scan(/.{1,6}/m)
-      ordered_lines[:line_one] << chars_with_matching_line_position[0]
-      ordered_lines[:line_two] << chars_with_matching_line_position[1]
-      ordered_lines[:line_three] << chars_with_matching_line_position[2]
-      ordered_lines[:line_four] << chars_with_matching_line_position[3]
+      index = 0
+      chars_with_matching_line_position.each do |char|
+        ordered_lines[index] << chars_with_matching_line_position[index]
+        index += 1
+      end
     end
-    all_ordered_chars = (ordered_lines[:line_one] + ordered_lines[:line_two] + ordered_lines[:line_three] + ordered_lines[:line_four]).compact
+    append_each_line(ordered_lines)
+  end
+
+  def append_each_line(ordered_lines)
+    full_message = []
+    ordered_lines.values.flatten.each do |line|
+      full_message << line
+    end
+    full_message
   end
 end
 # ruby ./lib/night_reader.rb braille.txt original_message.txt
-night_reader = NightReader.new
+# night_reader = NightReader.new
