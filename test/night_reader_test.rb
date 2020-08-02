@@ -64,6 +64,16 @@ class NightReaderTest < Minitest::Test
     assert_equal expected, @night_reader.encode_to_english
   end
 
+  def test_collect_each_char_by_position_on_line
+    splitted_msg = [
+                    ["0.", "0.", "0.", "0.", "0.", "..", ".0", "0.", "0.", "0.", "00"],
+                    ["00", ".0", "0.", "0.", ".0", "..", "00", ".0", "00", "0.", ".0"],
+                    ["..", "..", "0.", "0.", "0.", "..", ".0", "0.", "0.", "0.", ".."]
+                  ]
+    # collect_each_char_by_position_on_line collects the same index from each line
+    assert_equal ["0.00.."], @night_reader.collect_each_char_by_position_on_line(splitted_msg)
+  end
+
   def test_append_each_line
     ordered_lines = {
                     0=>
