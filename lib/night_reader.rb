@@ -63,13 +63,13 @@ class NightReader
 
   def form_braille_characters(splitted_msg)
     while @position_on_line < splitted_msg[0].size
-      one_char = ''
+      each_char_at_postion = ''
       splitted_msg.each do |line|
         if line[@position_on_line] != nil
-          one_char += line[@position_on_line]
+          each_char_at_postion += line[@position_on_line]
         end
       end
-      @formed_chars << one_char
+      @formed_chars << each_char_at_postion
       check_position_on_line(splitted_msg)
     end
     order_characters_by_line
