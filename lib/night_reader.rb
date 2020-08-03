@@ -1,98 +1,19 @@
 require_relative "fileable"
 require_relative "dictionary"
+require_relative "translator"
+include Fileable
 
-class NightReader
-  include Fileable
-
-  attr_reader :dictionary,
-              :english
-
-  def initialize
-    # For testing: remove @ from argv wherever used when ready to run from comman line
-    @ARGV = ["braille.txt", "original_message.txt"]
-    @dictionary = Dictionary.new
-    @position_on_line = 0
-    @formed_chars = []
-    # Uncomment when ready to run
-    # @english = encode_to_english
-    # write(@english, ARGV[1])
-    # puts create_sample_line
-  end
-
-  def create_sample_line
-    char_count = read(@ARGV[0]).chomp.length
-    "Created '#{@ARGV[1]}' containing #{char_count} characters"
-  end
-
-  def split_message
-    message_string = read(@ARGV[0])
-    split_lines = message_string.split("\n")
-    split_line_chars = split_lines.map do |line|
-      line.scan(/.{1,2}/m)
+  if ARGV == [] || ARGV == ["message.txt", "braille.txt"]
+    2.times do
+      ARGV.pop
     end
-    split_line_chars
+    ARGV << "braille.txt"
+    ARGV << "original_message.txt"
   end
 
-  def collect_braille_characters
-    splitted_msg = split_message
-    form_braille_characters(splitted_msg)
-  end
+  translator = Translator.new
+  english = translator.encode_to_english
+  write(english, ARGV[1])
+  puts translator.create_sample_line
 
-  def encode_to_english
-    all_chars = collect_braille_characters
-    original_message = ''
-    all_chars.each do |char|
-      original_message += @dictionary.to_english_conversion[char]
-    end
-    original_message
-  end
-
-  def form_braille_characters(splitted_msg)
-    while @position_on_line < splitted_msg[0].size
-      collect_each_char_by_position_on_line(splitted_msg)
-      check_position_on_line(splitted_msg)
-    end
-    order_characters_by_line
-  end
-
-  def collect_each_char_by_position_on_line(splitted_msg)
-    each_char_at_postion = ''
-    splitted_msg.each do |line|
-      if line[@position_on_line] != nil
-        each_char_at_postion += line[@position_on_line]
-      end
-    end
-    @formed_chars << each_char_at_postion
-  end
-
-  def check_position_on_line(splitted_msg)
-    if @position_on_line == splitted_msg[0].size
-      @position_on_line = 0
-    else
-      @position_on_line += 1
-    end
-  end
-
-  def order_characters_by_line
-    ordered_lines = Hash.new { |hash, key| hash[key] = []}
-    @formed_chars.each do |chars|
-      chars_with_matching_line_position = chars.scan(/.{1,6}/m)
-      index = 0
-      chars_with_matching_line_position.each do |char|
-        ordered_lines[index] << chars_with_matching_line_position[index]
-        index += 1
-      end
-    end
-    append_each_line(ordered_lines)
-  end
-
-  def append_each_line(ordered_lines)
-    full_message = []
-    ordered_lines.values.flatten.each do |line|
-      full_message << line
-    end
-    full_message
-  end
-end
 # ruby ./lib/night_reader.rb braille.txt original_message.txt
-# night_reader = NightReader.new
