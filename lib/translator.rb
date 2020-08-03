@@ -140,6 +140,11 @@ class Translator
 
   def order_characters_by_line
     ordered_lines = Hash.new { |hash, key| hash[key] = []}
+    collect_chars_by_position_on_line(ordered_lines)
+    append_each_line(ordered_lines)
+  end
+
+  def collect_chars_by_position_on_line(ordered_lines)
     @formed_chars.each do |chars|
       chars_with_matching_line_position = chars.scan(/.{1,6}/m)
       index = 0
@@ -148,7 +153,6 @@ class Translator
         index += 1
       end
     end
-    append_each_line(ordered_lines)
   end
 
   def append_each_line(ordered_lines)
