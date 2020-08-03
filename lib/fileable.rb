@@ -1,9 +1,11 @@
-class FileWriter
+module Fileable
 
   def write(translation, filename)
-    # filename = "braille.txt"
-    # commented for hard-coded testing
-    # filename = ARGV[1]
     File.open(filename, "w") { |file| file.write "#{translation}"}
   end
+
+  def read(filename)
+    File.read(filename)
+  end
+
 end
