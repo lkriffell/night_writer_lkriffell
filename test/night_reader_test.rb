@@ -74,6 +74,14 @@ class NightReaderTest < Minitest::Test
     assert_equal ["0.00.."], @night_reader.collect_each_char_by_position_on_line(splitted_msg)
   end
 
+  def test_check_position_on_line
+    splitted_msg_1 = [""]
+    splitted_msg_2 = [["h", "i"], ["o"]]
+
+    assert_equal 0, @night_reader.check_position_on_line(splitted_msg_1)
+    assert_equal 1, @night_reader.check_position_on_line(splitted_msg_2)
+  end
+
   def test_append_each_line
     ordered_lines = {
                     0=>
