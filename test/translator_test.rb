@@ -7,6 +7,7 @@ class TranslatorTest < Minitest::Test
     @translator = Translator.new
     write("0.0.0.0.0....00.0.0.00\n00.00.0..0..00.0000..0\n....0.0.0....00.0.0...", "braille.txt")
     write("hello world", "message.txt")
+    write("hello world", "original_message.txt")
   end
 
   def test_it_exists
@@ -26,7 +27,7 @@ class TranslatorTest < Minitest::Test
   def test_create_sample_line_original_to_braille
     set_arguments_original_to_braille
 
-    assert_equal "Created 'braille.txt' containing 11 characters", @translator.create_sample_line
+    assert_equal "Created 'braille.txt' containing 68 characters", @translator.create_sample_line
 
     puts @translator.create_sample_line
   end
@@ -87,7 +88,7 @@ class TranslatorTest < Minitest::Test
   def test_create_sample_line_braille_to_original
     set_arguments_braille_to_original
 
-    assert_equal "Created 'original_message.txt' containing 68 characters", @translator.create_sample_line
+    assert_equal "Created 'original_message.txt' containing 11 characters", @translator.create_sample_line
 
     puts @translator.create_sample_line
   end

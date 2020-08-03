@@ -16,7 +16,7 @@ class Translator
   end
 
   def create_sample_line
-    char_count = read(ARGV[0]).chomp.length
+    char_count = read(ARGV[1]).chomp.length
     "Created '#{ARGV[1]}' containing #{char_count} characters"
   end
 # To english conversion
