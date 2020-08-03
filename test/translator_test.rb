@@ -16,13 +16,11 @@ class TranslatorTest < Minitest::Test
 
 # to braille tests
   def set_arguments_original_to_braille
-    if ARGV == [] || ARGV == ["braille.txt", "original_message.txt"]
-      2.times do
-        ARGV.pop
-      end
-      ARGV << "message.txt"
-      ARGV << "braille.txt"
+    2.times do
+      ARGV.pop
     end
+    ARGV << "message.txt"
+    ARGV << "braille.txt"
   end
 
   def test_create_sample_line_original_to_braille
@@ -79,13 +77,11 @@ class TranslatorTest < Minitest::Test
 
 # to english tests
   def set_arguments_braille_to_original
-    if ARGV == [] || ARGV == ["message.txt", "braille.txt"]
-      2.times do
-        ARGV.pop
-      end
-      ARGV << "braille.txt"
-      ARGV << "original_message.txt"
+    2.times do
+      ARGV.pop
     end
+    ARGV << "braille.txt"
+    ARGV << "original_message.txt"
   end
 
   def test_create_sample_line_braille_to_original
