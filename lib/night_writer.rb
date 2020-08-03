@@ -43,14 +43,14 @@ class NightWriter
 
   def determine_row_size(split_braille)
     denominator = 1
-    line_count = nil
-    while line_count.nil?
+    row_size = nil
+    while row_size.nil?
       if split_braille.size / denominator <= 40
-        line_count = split_braille.size / denominator
+        row_size = split_braille.size / denominator
       end
       denominator += 1
     end
-    line_count
+    row_size
   end
 
   def arrange_for_output
