@@ -27,9 +27,8 @@ class NightReader
   def split_message
     message_string = read(@ARGV[0])
     split_lines = message_string.split("\n")
-    split_line_chars = []
-    split_lines.each do |line|
-      split_line_chars << line.scan(/.{1,2}/m)
+    split_line_chars = split_lines.map do |line|
+      line.scan(/.{1,2}/m)
     end
     split_line_chars
   end
