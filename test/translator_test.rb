@@ -131,16 +131,6 @@ class TranslatorTest < Minitest::Test
     assert_equal ["0.00.."], @translator.collect_each_char_by_position_on_line(splitted_msg)
   end
 
-  def test_check_position_on_line
-    ARGV.replace ["braille.txt", "original_message.txt"]
-
-    splitted_msg_1 = [""]
-    splitted_msg_2 = [["h", "i"], ["o"]]
-
-    assert_equal 0, @translator.check_position_on_line(splitted_msg_1)
-    assert_equal 1, @translator.check_position_on_line(splitted_msg_2)
-  end
-
   def test_append_each_line
     ARGV.replace ["braille.txt", "original_message.txt"]
 
