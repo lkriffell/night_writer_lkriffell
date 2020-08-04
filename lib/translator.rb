@@ -5,10 +5,10 @@ class Translator
 
   def initialize
     @dictionary = Dictionary.new
-# To braille variables
+# night reader variables
     @position_on_line = 0
     @formed_chars = []
-# to english variables
+# night writer variables
     @fully_translated_for_output = ""
     @position_on_first_line = 0
     @position_on_second_line = 1
@@ -19,8 +19,8 @@ class Translator
     char_count = read(ARGV[1]).chomp.length
     "Created '#{ARGV[1]}' containing #{char_count} characters"
   end
-# To english conversion
 
+# To english conversion
   def split_message
     message_string = read(ARGV[0])
     message_string.chomp.split("")
