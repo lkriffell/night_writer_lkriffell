@@ -121,13 +121,13 @@ class Translator
   end
 
   def collect_each_char_by_position_on_line(splitted_braille)
-    each_char_at_postion = ''
+    each_char_at_position = ''
     splitted_braille.each do |line|
       if line[@position_on_line] != nil
-        each_char_at_postion += line[@position_on_line]
+        each_char_at_position += line[@position_on_line]
       end
     end
-    @formed_chars << each_char_at_postion
+    @formed_chars << each_char_at_position
   end
 
   def check_position_on_line(splitted_braille)
@@ -148,7 +148,7 @@ class Translator
     @formed_chars.each do |chars|
       chars_with_matching_line_position = chars.scan(/.{1,6}/m)
       index = 0
-      chars_with_matching_line_position.each do |char|
+      chars_with_matching_line_position.map do |char|
         ordered_lines[index] << chars_with_matching_line_position[index]
         index += 1
       end
@@ -156,10 +156,8 @@ class Translator
   end
 
   def append_each_line(ordered_lines)
-    full_message = []
-    ordered_lines.values.flatten.each do |line|
-      full_message << line
+    ordered_lines.values.flatten.map do |line|
+      line
     end
-    full_message
   end
 end
