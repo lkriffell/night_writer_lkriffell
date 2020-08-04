@@ -108,9 +108,8 @@ class Translator
   end
 
   def form_braille_characters(splitted_braille)
-    while @position_on_line < splitted_braille[0].size
+    splitted_braille[0].size.times do
       collect_each_char_by_position_on_line(splitted_braille)
-      check_position_on_line(splitted_braille)
     end
     order_characters_by_line
   end
@@ -121,15 +120,8 @@ class Translator
         line[@position_on_line]
       end
     end.join
+    @position_on_line += 1
     @formed_chars << each_char_at_position
-  end
-
-  def check_position_on_line(splitted_braille)
-    if @position_on_line == splitted_braille[0].size
-      @position_on_line = 0
-    else
-      @position_on_line += 1
-    end
   end
 
   def order_characters_by_line
@@ -139,12 +131,10 @@ class Translator
   end
 
   def collect_chars_by_position_on_line(ordered_lines)
-    @formed_chars.each do |chars|
+    @formed_chars.map do |chars|
       chars_with_matching_line_position = chars.scan(/.{1,6}/m)
-      index = 0
-      chars_with_matching_line_position.map do |char|
+      chars_with_matching_line_position.each_with_index do |char, index|
         ordered_lines[index] << chars_with_matching_line_position[index]
-        index += 1
       end
     end
   end
