@@ -28,11 +28,9 @@ class Translator
 
   def encode_to_braille
     split_msg = split_message
-    new_message = ''
-    split_msg.each do |char|
-      new_message += @dictionary.to_braille_conversion[char]
-    end
-    new_message.scan(/.{1,2}/m)
+    split_msg.map do |char|
+      @dictionary.to_braille_conversion[char]
+    end.join.scan(/.{1,2}/m)
   end
 
   def determine_row_size(split_braille)
@@ -92,10 +90,9 @@ class Translator
   def split_braille
     message_string = read(ARGV[0])
     split_lines = message_string.split("\n")
-    split_line_chars = split_lines.map do |line|
+    split_lines.map do |line|
       line.scan(/.{1,2}/m)
     end
-    split_line_chars
   end
 
   def collect_braille_characters
@@ -105,11 +102,9 @@ class Translator
 
   def encode_to_english
     all_chars = collect_braille_characters
-    original_message = ''
-    all_chars.each do |char|
-      original_message += @dictionary.to_english_conversion[char]
-    end
-    original_message
+    all_chars.map do |char|
+      @dictionary.to_english_conversion[char]
+    end.join
   end
 
   def form_braille_characters(splitted_braille)
@@ -121,12 +116,11 @@ class Translator
   end
 
   def collect_each_char_by_position_on_line(splitted_braille)
-    each_char_at_position = ''
-    splitted_braille.each do |line|
+    each_char_at_position = splitted_braille.map do |line|
       if line[@position_on_line] != nil
-        each_char_at_position += line[@position_on_line]
+        line[@position_on_line]
       end
-    end
+    end.join
     @formed_chars << each_char_at_position
   end
 
